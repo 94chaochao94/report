@@ -1,0 +1,333 @@
+//顶部
+.orderTop{
+    background-color: white;
+    width: 100%;
+    height: 3.4rem;
+    line-height: 3.4rem;
+    overflow: hidden;
+    box-shadow: 0px 1px 0px #C9C9C9;
+    .active{
+        color: #246AC2;
+        border-bottom: 1px solid #246AC2;
+        p{
+            display: block;
+        }
+    }
+    .swiper-slide {
+        width: auto;
+        padding: 0px 1rem;
+        position: relative;
+        font-size: 1.4rem;
+        p{
+            width: 100%;
+            height: 0.2rem;
+            background: #246AC2;
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            z-index: 1;
+            display: none;
+        }
+    }
+}
+//内容
+.orderContent{
+    width: 94%;
+    height: calc(100vh - 7.4rem);
+    overflow-y: scroll;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 4%;
+    text-align: left;
+}
+
+/*法律要点分析*/
+.name{
+  font-size: 14px;
+  flex-direction:column;
+  background-color:white;
+  border-radius: 2px;
+  padding-top:10px;
+  padding-left:12px;
+  padding-bottom:3px;
+}
+.keywords_dot {
+  width:5px;
+  height:5px;
+  border-radius: 5px;
+  background-color:#4B96F0;
+  margin-right:11px;
+  display: inline-block;
+  margin-bottom: 1%;
+}
+/*相关法条解析*/
+.laws_dot {
+  width:7px;
+  height:7px;
+  border-radius: 7px;
+  background-color:#4B96F0;
+  margin-right:11px;
+  display: inline-block;
+  margin-bottom: 7%;
+}
+.laws_title {
+  display: inline-block;
+  text-align: left;
+  font-size:16px;
+  color:#0078DA;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+  width:92%;
+  font-weight: 600;
+}
+.laws_tag {
+  font-size: 11px;
+  display: inline-block;
+  color: #FF3C3C;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+  line-height: 13px;
+  margin-top: 13px;
+  margin-bottom: 9px;
+  margin-left: 7%;
+  padding: 5px;
+  border: solid 1px;
+  border-radius: 4px;
+  border-color: #FF3C3C;
+}
+.laws_content {
+  font-size: 14px;
+  line-height: 19px;
+  margin-left: 7%;
+  margin-right: 3%;
+  margin-top: 5px;
+  color: #333333;
+  margin-bottom: 3%;
+}
+/*司法观点推荐*/
+.points_dot {
+  width:7px;
+  height:7px;
+  border-radius: 7px;
+  background-color:#4B96F0;
+  margin-right:11px;
+  display: inline-block;
+  margin-bottom: 1%;
+}
+.points_content {
+  font-size: 14px;
+  line-height: 19px;
+  margin-left: 7%;
+  margin-right: 3%;
+  margin-top: 4%;
+  color: #333333;
+  margin-bottom: 3%;
+}
+
+.case {
+  text-align: center;
+}
+
+.case img {
+  width: 7%;
+}
+/*相关案例推荐*/
+.cases_title {
+  text-align: left;
+  font-size:16px;
+  color:#0078DA;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+  margin-left:10px;
+  width:90%;
+  font-weight: 600;
+}
+.cases_content {
+  font-size: 14px;
+  line-height: 19px;
+  margin-left: 4%;
+  margin-top: 4%;
+  color: #333333;
+}
+/*诉讼风险评估*/
+.claim{
+  font-size: 14px;
+  flex-direction:column;
+  background-color:white;
+  border-radius: 2px;
+  padding-top:10px;
+  padding-left:12px;
+  padding-bottom:3px;
+  margin-bottom: 3%;
+}
+.claim_tag {
+  text-align: center;
+  font-size: 15px;
+  margin-top: 5%;
+}
+.claim_title {
+  text-align: left;
+  font-size:16px;
+  color:#0078DA;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+  margin-left:10px;
+  width:90%;
+  font-weight: 600;
+}
+.sub_title {
+  text-align: left;
+  font-size: 13px;
+  color: gray;
+  margin-left: 10px;
+  width: 90%;
+  margin-top: 2%;
+}
+.evidence_tag {
+  width: 30%;
+  text-align: left;
+  float: left;
+  font-size: 15px;
+}
+.evidence_dot {
+  width:5px;
+  height:5px;
+  border-radius: 5px;
+  background-color:#4B96F0;
+  margin-right:11px;
+  display: inline-block;
+  margin-bottom: 1%;
+}
+
+.reject_tag {
+  text-align: left;
+  font-size: 15px;
+  margin-left: 3%;
+}
+.per {
+  width: 15%;
+  display: inline-block;
+  text-align: center;
+}
+.support {
+  width: 55%;
+  display: inline-block;
+  margin-left: 5%;
+  margin-top: 3%;
+}
+.reject {
+  width: 55%;
+  display: inline-block;
+  margin-top: 3%;
+}
+.m-parent {
+  display: inline-block;
+  position: relative;
+  width: 57%;
+  height: 10px;
+  background-color: red;
+  border-radius: 10px;
+  margin-bottom: 7%;
+  margin-left: 3%;
+  margin-right: 3%;
+}
+.u-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+  height: 100%;
+  background-color: #0799fd;
+}
+.claim_per {
+  font-size: 12px;
+}
+.reject-parent {
+  display: inline-block;
+  position: relative;
+  width: 75%;
+  height: 15px;
+  background-color: white;
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-top: 1%;
+}
+.reject-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #0799fd;
+}
+.reject_count {
+  display: inline-block;
+}
+/*诉讼流程指引*/
+.flow-parent {
+  display: inline-block;
+  position: relative;
+  width: 80%;
+  height: 30px;
+  background-color: white;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 1%;
+  margin-bottom: 3%;
+  border: 1px solid #0799fd;
+}
+.flow-child {
+  position: absolute;
+  left: 0;
+  width: 50%;
+  top: 0;
+  height: 100%;
+  background-color: #0799fd;
+  font-size: 15px;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+}
+.flow-child2{
+  position: absolute;
+  right: 0;
+  width: 50%;
+  top: 0;
+  height: 100%;
+  background-color: white;
+  font-size: 15px;
+  color: #0799fd;
+  text-align: center;
+  line-height: 30px;
+}
+.flow_nav {
+  color: #0799fd;
+  font-size: 17px;
+  margin-left: 4%;
+  margin-bottom: 1%;
+}
+.flow_dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 10px;
+  background-color: gray;
+  margin-right: 2%;
+  display: inline-block;
+  margin-bottom: 1%;
+}
+.flow_title {
+  display: inline-block;
+  text-align: left;
+  font-size:16px;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+  margin-top: 2%;
+}
+.flow_sub {
+  margin-left: 4%;
+  margin-right: 5%;
+  margin-top: 3%;
+  font-size: 12px;
+  color: gray;
+}
+.flow_content {
+  font-size: 15px;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 3%;
+}
+
