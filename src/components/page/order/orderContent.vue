@@ -1,7 +1,7 @@
 <template>
     <div class="orderContent">
       <!--法律要点分析-->
-      <div v-show="navName == 'law_tags'" @touchstart="moveStart()" @touchend="move(0)">
+      <div v-show="navName == 'law_tags'" @touchstart="moveStart()" @touchmove="move(0)">
         <ul>
           <li v-for="item in contentList">
             <div class="name">
@@ -12,7 +12,7 @@
         </ul>
       </div>
       <!--相关法条解析-->
-      <div v-show="navName == 'laws'" @touchstart="moveStart()" @touchend="move(1)">
+      <div v-show="navName == 'laws'" @touchstart="moveStart()" @touchmove="move(1)">
        <ul>
          <li v-for="item in contentList" style="margin-bottom:3%">
            <div class="name">
@@ -25,7 +25,7 @@
        </ul>
       </div>
       <!--司法观点推荐-->
-      <div v-show="navName == 'points'" @touchstart="moveStart()" @touchend="move(2)">
+      <div v-show="navName == 'points'" @touchstart="moveStart()" @touchmove="move(2)">
         <ul>
           <li v-for="item in contentList" style="margin-bottom:3%">
             <div class="name">
@@ -40,7 +40,7 @@
         </ul>
       </div>
       <!--相关案例推荐-->
-      <div v-show="navName == 'cases'" @touchstart="moveStart()" @touchend="move(3)">
+      <div v-show="navName == 'cases'" @touchstart="moveStart()" @touchmove="move(3)">
         <ul>
           <li v-for="item in contentList" style="margin-bottom:3%">
             <div class="name">
@@ -51,7 +51,7 @@
         </ul>
       </div>
       <!--诉讼风险评估-->
-      <div v-show="navName == 'claims'" @touchstart="moveStart()" @touchend="move(4)">
+      <div v-show="navName == 'claims'" @touchstart="moveStart()" @touchmove="move(4)">
         <div class="claim">
           <p class="claim_title">您当前的诉讼请求支持率</p>
           <ul style="padding-bottom: 3%">
@@ -100,7 +100,7 @@
         </div>
       </div>
       <!--诉讼流程指引-->
-      <div v-show="navName == 'law_flow'" @touchstart="moveStart()" @touchend="move(5)">
+      <div v-show="navName == 'law_flow'" @touchstart="moveStart()" @touchmove="move(5)">
         <p class="flow-parent">
           <span class="flow-child" id="child" @click="disSuit()">非诉讼流程</span>
           <span class="flow-child2" id="child2" @click="suit()">诉讼流程</span>
@@ -194,12 +194,14 @@
         </ul>
       </div>
       <!--相关文书模板-->
-      <div v-show="navName == ''" @touchstart="moveStart()" @touchend="move(6)">
+      <div v-show="navName == 'doc_temp'" @touchstart="moveStart()" @touchmove="move(6)">
         <ul>
-          <li v-for="item in contentList">
-            <div class="name">
-              <div class="keywords_dot"></div>
-              <div style="width: 80%;display: inline-block;">{{item.tag}}</div>
+          <li v-for="(item, index) in contentList" style="margin-bottom:3%">
+            <div class="name" style="padding-bottom: 4%;padding-top: 4%">
+              <a class="downTemp" @click="down(index,item.url)">
+                <div class="points_dot"></div>
+                <p class="temp_title">{{item.name}}</p>
+              </a>
             </div>
           </li>
         </ul>
@@ -229,7 +231,6 @@
           });
           this.$root.$on('contentList',(data)=>{
             this.contentList = data;
-//            console.log(data);
           });
           this.$root.$on('evidencesList',(data)=>{
             this.evidencesList = data;
@@ -242,6 +243,10 @@
 
         },
         methods:{
+          down(index, url) {
+            var propUrl = 'http://xh.law.push.aegis-info.com' + url;
+            document.getElementsByClassName('downTemp')[index].href = propUrl;
+          },
           moveStart() {
             this.startX = event.touches[0].pageX;
             this.startY = event.touches[0].pageY;

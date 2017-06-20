@@ -6,7 +6,6 @@
                 <p></p>
             </swiper-slide>
         </swiper>
-      <!--<div class="more_icon" @click.native="showNav()"><img src="../../../../static/images/icon-menu.png" /></div>-->
     </div>
 </template>
 <script>
@@ -107,13 +106,25 @@
           } else if(item.id == 5) {
             propName = "law_flow";
           } else if(item.id == 6) {
-            this.axios.post('http://180.96.11.69:8500/api/android/law_push/preview_html').then((res) => {
-              console.log(111, res);
+            this.axios.post('http://192.168.11.88:7050/api/android/law_push/document_template').then((res) => {
+              console.log(111, res.data.data);
+              propName = "doc_temp";
+              this.swiperOption.onTap = (e)=>{
+                this.clickIndex = e.clickedIndex;
+                this.$root.$emit('navName',propName);
+                this.$root.$emit('contentList',res.data.data);
+                this.$root.$emit('slideActive',this.slideActiveIndex[this.clickIndex]);
+                this.$root.$emit('topIndex',this.clickIndex);
+              }
+              this.$root.$emit('navName',propName);
+              this.$root.$emit('contentList',res.data.data);
+              this.$root.$emit('slideActive',this.slideActiveIndex[this.clickIndex]);
+              this.$root.$emit('topIndex',this.clickIndex);
             })
           }
           this.axios.get('../../../../static/json/order.json').then((response)=>{
             let data = response.data;
-            console.log(data.data);
+//            console.log(data.data);
             let propContent = '';
             for(var key in data.data) {
               data.data.points.forEach(item => {
