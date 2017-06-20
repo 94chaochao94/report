@@ -12,7 +12,7 @@
         </ul>
       </div>
       <!--相关法条解析-->
-      <div v-show="navName == 'laws'" @touchend="move(1)">
+      <div v-show="navName == 'laws'" @touchstart="moveStart()" @touchend="move(1)">
        <ul>
          <li v-for="item in contentList" style="margin-bottom:3%">
            <div class="name">
@@ -25,7 +25,7 @@
        </ul>
       </div>
       <!--司法观点推荐-->
-      <div v-show="navName == 'points'" @touchend="move(2)">
+      <div v-show="navName == 'points'" @touchstart="moveStart()" @touchend="move(2)">
         <ul>
           <li v-for="item in contentList" style="margin-bottom:3%">
             <div class="name">
@@ -40,7 +40,7 @@
         </ul>
       </div>
       <!--相关案例推荐-->
-      <div v-show="navName == 'cases'" @touchend="move(3)">
+      <div v-show="navName == 'cases'" @touchstart="moveStart()" @touchend="move(3)">
         <ul>
           <li v-for="item in contentList" style="margin-bottom:3%">
             <div class="name">
@@ -51,7 +51,7 @@
         </ul>
       </div>
       <!--诉讼风险评估-->
-      <div v-show="navName == 'claims'" @touchend="move(4)">
+      <div v-show="navName == 'claims'" @touchstart="moveStart()" @touchend="move(4)">
         <div class="claim">
           <p class="claim_title">您当前的诉讼请求支持率</p>
           <ul style="padding-bottom: 3%">
@@ -100,7 +100,7 @@
         </div>
       </div>
       <!--诉讼流程指引-->
-      <div v-show="navName == 'law_flow'" @touchend="move(5)">
+      <div v-show="navName == 'law_flow'" @touchstart="moveStart()" @touchend="move(5)">
         <p class="flow-parent">
           <span class="flow-child" id="child" @click="disSuit()">非诉讼流程</span>
           <span class="flow-child2" id="child2" @click="suit()">诉讼流程</span>
@@ -194,7 +194,7 @@
         </ul>
       </div>
       <!--相关文书模板-->
-      <div v-show="navName == ''" @touchend="move(6)">
+      <div v-show="navName == ''" @touchstart="moveStart()" @touchend="move(6)">
         <ul>
           <li v-for="item in contentList">
             <div class="name">
