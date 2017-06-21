@@ -45,7 +45,8 @@
           },
           index: '',
           X: '',
-          Y: ''
+          Y: '',
+          qid: ''
         }
       } ,
       components: {
@@ -79,7 +80,8 @@
         });
       },
       mounted() {
-        this.axios.get('../../../../static/json/order.json').then((response)=>{
+        this.getQueryString();
+        this.axios.post('https://xcx.wechat.aegis-info.com/api/android/law_push/test',{'json':JSON.stringify({"qid":this.qid})}).then((response)=>{
           let data = response.data;
           //首次加载页面
           this.clickIndex = 0;
@@ -90,6 +92,12 @@
         });
       },
       methods: {
+        getQueryString() {
+          var test = window.location.href.split('qid=');
+          this.qid = test[1];
+          console.log("qid: " + this.qid);
+        },
+
         activeClick(index, item){
           this.clickIndex = index;
           let propName = "";
@@ -107,7 +115,7 @@
             propName = "law_flow";
           } else if(item.id == 6) {
             this.axios.post('http://192.168.11.88:7050/api/android/law_push/document_template').then((res) => {
-              console.log(111, res.data.data);
+//              console.log(111, res.data.data);
               propName = "doc_temp";
               this.swiperOption.onTap = (e)=>{
                 this.clickIndex = e.clickedIndex;
@@ -122,9 +130,9 @@
               this.$root.$emit('topIndex',this.clickIndex);
             })
           }
-          this.axios.get('../../../../static/json/order.json').then((response)=>{
+          this.axios.post('https://xcx.wechat.aegis-info.com/api/android/law_push/test',{'json':{"qid":this.qid}}).then((response)=>{
             let data = response.data;
-//            console.log(data.data);
+            console.log(data.data);
             let propContent = '';
             for(var key in data.data) {
               data.data.points.forEach(item => {
