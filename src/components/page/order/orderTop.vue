@@ -46,7 +46,8 @@
           index: '',
           X: '',
           Y: '',
-          qid: ''
+          qid: '',
+          initData: {}
         }
       } ,
       components: {
@@ -81,8 +82,23 @@
       },
       mounted() {
         this.getQueryString();
-        this.axios.post('https://xcx.wechat.aegis-info.com/api/android/law_push/test',{'json':JSON.stringify({"qid":this.qid})}).then((response)=>{
+        this.axios.post('https://xcx.wechat.aegis-info.com/api/android/law_push/test?axios=1',{"json":JSON.stringify({"qid":this.qid})}).then((response)=>{
           let data = response.data;
+          this.initData = data.data;
+          if(JSON.stringify(data.data) == "{}") {
+            this.$root.$emit('loading',true);
+            setTimeout(function(){
+              var that = this;
+              that.axios.post('https://xcx.wechat.aegis-info.com/api/android/law_push/test?axios=1',{"json":JSON.stringify({"qid":this.qid})}).then((res)=>{
+                this.initData = res.data.data;
+                this.$root.$emit('loading',false);
+              }).then((res)=>{
+                location.reload();
+                this.$root.$emit('loading',false);
+              })
+            }.bind(this),10000);
+          }
+          this.$root.$emit('dataList',this.initData);
           //首次加载页面
           this.clickIndex = 0;
           this.$root.$emit('contentList',data.data.law_tags);
@@ -130,42 +146,42 @@
               this.$root.$emit('topIndex',this.clickIndex);
             })
           }
-          this.axios.post('https://xcx.wechat.aegis-info.com/api/android/law_push/test',{'json':{"qid":this.qid}}).then((response)=>{
-            let data = response.data;
-            console.log(data.data);
-            let propContent = '';
-            for(var key in data.data) {
-              data.data.points.forEach(item => {
-                if(item.content && item.content.length > 150) {
-                  propContent = item.content.substring(1,150);
-                }
-                item.partContent = propContent;
+          let propContent = '';
+          for(var key in this.initData) {
+            this.initData.points.forEach(item => {
+              if(item.content && item.content.length > 210) {
                 item.show = true;
-              })
-
-            }
-            //激活当前swiper点击 active
-            this.swiperOption.onTap = (e)=>{
-              this.clickIndex = e.clickedIndex;
-              //contentList列表值
-              this.$root.$emit('contentList',data.data[propName]);
-              this.$root.$emit('evidencesList',data.data.evidences);
-              this.$root.$emit('rejectList',data.data.reject_cause);
-              //topNav值
-              this.$root.$emit('navName',propName);
-              //设置改点击的nav对应的slide的状态
-              this.$root.$emit('slideActive',this.slideActiveIndex[this.clickIndex]);
-              this.$root.$emit('topIndex',this.clickIndex);
-            }
-            this.$root.$emit('contentList',data.data[propName]);
-            this.$root.$emit('evidencesList',data.data.evidences);
-            this.$root.$emit('rejectList',data.data.reject_cause);
+              }else {
+                item.show = false;
+              }
+            });
+            this.initData.cases.forEach(item => {
+              if(item.content && item.content.length > 210) {
+                item.show = true;
+              }else {
+                item.show = false;
+              }
+            })
+          }
+          //激活当前swiper点击 active
+          this.swiperOption.onTap = (e)=>{
+            this.clickIndex = e.clickedIndex;
+            //contentList列表值
+            this.$root.$emit('contentList',this.initData[propName]);
+            this.$root.$emit('evidencesList',this.initData.evidences);
+            this.$root.$emit('rejectList',this.initData.reject_cause);
+            //topNav值
             this.$root.$emit('navName',propName);
+            //设置改点击的nav对应的slide的状态
             this.$root.$emit('slideActive',this.slideActiveIndex[this.clickIndex]);
             this.$root.$emit('topIndex',this.clickIndex);
-          }).catch((err)=>{
-            console.log(err);
-          });
+          }
+          this.$root.$emit('contentList',this.initData[propName]);
+          this.$root.$emit('evidencesList',this.initData.evidences);
+          this.$root.$emit('rejectList',this.initData.reject_cause);
+          this.$root.$emit('navName',propName);
+          this.$root.$emit('slideActive',this.slideActiveIndex[this.clickIndex]);
+          this.$root.$emit('topIndex',this.clickIndex);
         }
       }
     }

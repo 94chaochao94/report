@@ -122,11 +122,16 @@
   margin-bottom: 3%;
 }
 
-.case {
+.case_more {
   text-align: center;
 }
-
-.case img {
+.case_part {
+  text-align: center;
+}
+.case_more img {
+  width: 7%;
+}
+.case_part img {
   width: 7%;
 }
 /*相关案例推荐*/
@@ -143,8 +148,21 @@
   font-size: 14px;
   line-height: 19px;
   margin-left: 4%;
+  margin-right: 4%;
   margin-top: 4%;
   color: #333333;
+}
+.cases_more {
+  text-align: center;
+}
+.cases_part {
+  text-align: center;
+}
+.cases_more img {
+  width: 7%;
+}
+.cases_part img {
+  width: 7%;
 }
 /*诉讼风险评估*/
 .claim{

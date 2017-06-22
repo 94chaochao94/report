@@ -1,12 +1,19 @@
 <template>
     <div class="orderContent">
+      <div v-if="loading" style="text-align: center;padding-top: 30%">
+        <img style="width: 50%" src="../../../../static/images/loading.gif"/>
+        <p class="word">正在努力加载...</p>
+      </div>
       <!--法律要点分析-->
       <div v-show="navName == 'law_tags'" @touchstart="moveStart()" @touchmove="move(0)">
-        <ul>
+        <ul style="padding-bottom: 3%">
           <li v-for="item in contentList">
             <div class="name">
-              <div class="keywords_dot"></div>
-              <div style="width: 80%;display: inline-block;">{{item.tag}}</div>
+              <p class="reject_tag">{{item.tag}}</p>
+              <p class="reject-parent">
+                <span class="reject-child" :style="{ width: item.count/10000 + '%' }"></span>
+              </p>
+              <p class="reject_count">{{item.count}}</p>
             </div>
           </li>
         </ul>
@@ -18,7 +25,7 @@
            <div class="name">
              <div class="laws_dot"></div>
              <p class="laws_title">{{item.title}}</p>
-             <span class="laws_tag">{{item.tag}}</span>
+             <span class="laws_tag" v-show="item.tag && item.tag != ''">{{item.tag}}</span>
              <p class="laws_content">{{item.content}}</p>
            </div>
          </li>
@@ -27,14 +34,18 @@
       <!--司法观点推荐-->
       <div v-show="navName == 'points'" @touchstart="moveStart()" @touchmove="move(2)">
         <ul>
-          <li v-for="item in contentList" style="margin-bottom:3%">
+          <li v-for="(item, index) in contentList" style="margin-bottom:3%">
             <div class="name">
               <div class="points_dot"></div>
               <p class="laws_title">{{item.title}}</p>
-              <p class="points_content" v-if="item.show">{{item.partContent}}</p>
-              <p class="points_content" v-else>{{item.content}}</p>
-              <div class="case" v-show="item.show"><img @click="showMore(item)" src="../../../../static/images/case_more.png"/></div>
-              <div class="case" v-show="!item.show"><img src="../../../../static/images/case_part.png" @click="showPart(item)"/></div>
+              <div  v-if="item.show == false">
+                <p class="points_content">{{item.content}}</p>
+              </div>
+              <div v-else>
+                <p class="points_content" style="height:190px;overflow: hidden">{{item.content}}</p>
+                <div class="case_more"><img @click="showMore(index)" src="../../../../static/images/case_more.png"/></div>
+                <div class="case_part" style="display:none"><img @click="showPart(index)" src="../../../../static/images/case_part.png"/></div>
+              </div>
             </div>
           </li>
         </ul>
@@ -42,62 +53,69 @@
       <!--相关案例推荐-->
       <div v-show="navName == 'cases'" @touchstart="moveStart()" @touchmove="move(3)">
         <ul>
-          <li v-for="item in contentList" style="margin-bottom:3%">
+          <li v-for="(item, index) in contentList" style="margin-bottom:3%">
             <div class="name">
               <p class="cases_title">{{item.title}}</p>
-              <p class="cases_content">{{item.content}}</p>
+              <div  v-if="item.show == false">
+                <p class="cases_content">{{item.content}}</p>
+              </div>
+              <div v-else>
+                <p class="cases_content" style="height:190px;overflow: hidden">{{item.content}}</p>
+                <div class="cases_more"><img @click="caseMore(index)" src="../../../../static/images/case_more.png"/></div>
+                <div class="cases_part" style="display:none"><img @click="casePart(index)" src="../../../../static/images/case_part.png"/></div>
+              </div>
             </div>
           </li>
         </ul>
       </div>
       <!--诉讼风险评估-->
       <div v-show="navName == 'claims'" @touchstart="moveStart()" @touchmove="move(4)">
-        <div class="claim">
-          <p class="claim_title">您当前的诉讼请求支持率</p>
-          <ul style="padding-bottom: 3%">
-            <li v-for="item in contentList" style="margin-top: 3%">
-              <p class="claim_tag">{{item.tag}}</p>
-              <div>
-                <div class="per">
-                  <img class="support" src="../../../../static/images/support.png"/>
-                  <div class="claim_per">支持{{item.support}}%</div>
+          <div class="claim">
+            <p class="claim_title">您当前的诉讼请求支持率</p>
+            <ul style="padding-bottom: 3%">
+              <li v-for="item in contentList" style="margin-top: 3%">
+                <p class="claim_tag">{{item.tag}}</p>
+                <div>
+                  <div class="per">
+                    <img class="support" src="../../../../static/images/support.png"/>
+                    <div class="claim_per">支持{{item.support}}%</div>
+                  </div>
+                  <p class="m-parent">
+                    <span class="u-child" :style="{ width: item.support + '%' }"></span>
+                  </p>
+                  <div class="per">
+                    <img class="reject" src="../../../../static/images/reject.png"/>
+                    <div class="claim_per">驳回{{item.reject}}%</div>
+                  </div>
                 </div>
-                <p class="m-parent">
-                  <span class="u-child" :style="{ width: item.support + '%' }"></span>
+              </li>
+            </ul>
+          </div>
+          <div class="claim">
+            <p class="claim_title">常见证据</p>
+            <p class="sub_title">根据您的案件情形，建议您准备一下证据（仅供参考）</p>
+            <ul style="padding-bottom: 3%">
+              <li v-for="item in evidencesList" style="margin-top: 3%">
+                <div class="evidence_tag">
+                  <div class="evidence_dot"></div>
+                  <div style="display: inline-block;">{{item.tag}}</div>
+                </div>
+              </li>
+              <li style="clear: both"></li>
+            </ul>
+          </div>
+          <div class="claim">
+            <p class="claim_title">驳回诉讼请求原因分析</p>
+            <ul style="padding-bottom: 3%">
+              <li v-for="item in rejectList" style="margin-top: 3%">
+                <p class="reject_tag">{{item.tag}}</p>
+                <p class="reject-parent">
+                  <span class="reject-child" :style="{ width: item.count/1000 + '%' }"></span>
                 </p>
-                <div class="per">
-                  <img class="reject" src="../../../../static/images/reject.png"/>
-                  <div class="claim_per">驳回{{item.reject}}%</div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="claim">
-          <p class="claim_title">常见证据</p>
-          <p class="sub_title">根据您的案件情形，建议您准备一下证据（仅供参考）</p>
-          <ul style="padding-bottom: 3%">
-            <li v-for="item in evidencesList" style="margin-top: 3%">
-              <div class="evidence_tag">
-                <div class="evidence_dot"></div>
-                <div style="display: inline-block;">{{item.tag}}</div>
-              </div>
-            </li>
-            <li style="clear: both"></li>
-          </ul>
-        </div>
-        <div class="claim">
-          <p class="claim_title">驳回诉讼请求原因分析</p>
-          <ul style="padding-bottom: 3%">
-            <li v-for="item in rejectList" style="margin-top: 3%">
-              <p class="reject_tag">{{item.tag}}</p>
-              <p class="reject-parent">
-                <span class="reject-child" :style="{ width: item.count/1000 + '%' }"></span>
-              </p>
-              <p class="reject_count">{{item.count}}</p>
-            </li>
-          </ul>
-        </div>
+                <p class="reject_count">{{item.count}}</p>
+              </li>
+            </ul>
+          </div>
       </div>
       <!--诉讼流程指引-->
       <div v-show="navName == 'law_flow'" @touchstart="moveStart()" @touchmove="move(5)">
@@ -222,7 +240,11 @@
               moveEndX: '',
               moveEndY: '',
               X: '',
-              Y: ''
+              Y: '',
+              more: [],
+              part: false,
+              dataList: {},
+              loading: false
             }
         } ,
         created(){
@@ -237,6 +259,14 @@
           });
           this.$root.$on('rejectList',(data)=>{
             this.rejectList = data;
+          });
+          this.$root.$on('dataList',(data)=>{
+            this.dataList = data;
+            console.log(9999, this.dataList);
+          });
+          this.$root.$on('loading',(data)=>{
+            this.loading = data;
+            console.log(888, this.loading);
           });
         },
         mounted() {
@@ -260,11 +290,25 @@
             this.$root.$emit('Y', this.Y);
             this.$root.$emit('index', index);
           },
-          showMore(item) {
-            item.show = false;
+          showMore(index) {
+            document.getElementsByClassName('points_content')[index].style.height = 'auto';
+            document.getElementsByClassName('case_more')[index].style.display = 'none';
+            document.getElementsByClassName('case_part')[index].style.display = 'block';
           },
-          showPart(item) {
-            item.show = true;
+          showPart(index) {
+            document.getElementsByClassName('points_content')[index].style.height = '190px';
+            document.getElementsByClassName('case_more')[index].style.display = 'block';
+            document.getElementsByClassName('case_part')[index].style.display = 'none';
+          },
+          caseMore(index) {
+            document.getElementsByClassName('cases_content')[index].style.height = 'auto';
+            document.getElementsByClassName('cases_more')[index].style.display = 'none';
+            document.getElementsByClassName('cases_part')[index].style.display = 'block';
+          },
+          casePart(index) {
+            document.getElementsByClassName('cases_content')[index].style.height = '190px';
+            document.getElementsByClassName('cases_more')[index].style.display = 'block';
+            document.getElementsByClassName('cases_part')[index].style.display = 'none';
           },
           disSuit() {
             this.isSuit = false;
@@ -289,4 +333,7 @@
 </script>
 <style lang="scss" scoped>
   @import '../../../style/page/order.scss';
+  .word {
+    font-size: 16px;
+  }
 </style>
