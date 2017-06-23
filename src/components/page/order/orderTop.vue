@@ -17,19 +17,19 @@
           clickIndex: 0,
           titleList: [{
             id: 0,
-            name: '法律要点分析'
-          }, {
-            id: 1,
             name: '相关法条解析'
           }, {
-            id: 2,
+            id: 1,
             name: '司法观点推荐'
           }, {
-            id: 3,
+            id: 2,
             name: '相关案例推荐'
           }, {
-            id: 4,
+            id: 3,
             name: '诉讼风险评估'
+          }, {
+            id: 4,
+            name: '法律要点分析'
           }, {
             id: 5,
             name: '诉讼流程指引'
@@ -101,8 +101,8 @@
           this.$root.$emit('dataList',this.initData);
           //首次加载页面
           this.clickIndex = 0;
-          this.$root.$emit('contentList',data.data.law_tags);
-          this.$root.$emit('navName','law_tags');
+          this.$root.$emit('contentList',data.data.laws);
+          this.$root.$emit('navName','laws');
         }).catch((err)=>{
           console.log(err);
         });
@@ -117,15 +117,15 @@
         activeClick(index, item){
           this.clickIndex = index;
           let propName = "";
-          if(item.id == 0) {
+          if(item.id == 4) {
             propName = "law_tags";
-          } else if(item.id == 1) {
+          } else if(item.id == 0) {
             propName = "laws";
-          } else if(item.id == 2) {
+          } else if(item.id == 1) {
             propName = "points";
-          } else if(item.id == 3) {
+          } else if(item.id == 2) {
             propName = "cases";
-          } else if(item.id == 4) {
+          } else if(item.id == 3) {
             propName = "claims";
           } else if(item.id == 5) {
             propName = "law_flow";

@@ -4,20 +4,6 @@
         <img style="width: 50%" src="../../../../static/images/loading.gif"/>
         <p class="word">正在努力加载...</p>
       </div>
-      <!--法律要点分析-->
-      <div v-show="navName == 'law_tags'" @touchstart="moveStart()" @touchmove="move(0)">
-        <ul style="padding-bottom: 3%">
-          <li v-for="item in contentList">
-            <div class="name">
-              <p class="reject_tag">{{item.tag}}</p>
-              <p class="reject-parent">
-                <span class="reject-child" :style="{ width: item.count/10000 + '%' }"></span>
-              </p>
-              <p class="reject_count">{{item.count}}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
       <!--相关法条解析-->
       <div v-show="navName == 'laws'" @touchstart="moveStart()" @touchmove="move(1)">
        <ul>
@@ -116,6 +102,20 @@
               </li>
             </ul>
           </div>
+      </div>
+      <!--法律要点分析-->
+      <div v-show="navName == 'law_tags'" @touchstart="moveStart()" @touchmove="move(0)">
+        <ul style="padding-bottom: 3%">
+          <li v-for="item in contentList">
+            <div class="name">
+              <p class="reject_tag">{{item.tag}}</p>
+              <p class="reject-parent">
+                <span class="reject-child" :style="{ width: item.count/10000 + '%' }"></span>
+              </p>
+              <p class="reject_count">{{item.count}}</p>
+            </div>
+          </li>
+        </ul>
       </div>
       <!--诉讼流程指引-->
       <div v-show="navName == 'law_flow'" @touchstart="moveStart()" @touchmove="move(5)">
@@ -253,6 +253,7 @@
           });
           this.$root.$on('contentList',(data)=>{
             this.contentList = data;
+            console.log(9999, this.contentList);
           });
           this.$root.$on('evidencesList',(data)=>{
             this.evidencesList = data;
@@ -262,11 +263,11 @@
           });
           this.$root.$on('dataList',(data)=>{
             this.dataList = data;
-            console.log(9999, this.dataList);
+//            console.log(9999, this.dataList);
           });
           this.$root.$on('loading',(data)=>{
             this.loading = data;
-            console.log(888, this.loading);
+//            console.log(888, this.loading);
           });
         },
         mounted() {
