@@ -224,6 +224,7 @@
           </li>
         </ul>
       </div>
+      <div class="back-button" @click="backPre">返&nbsp;&nbsp;&nbsp;&nbsp;回</div>
     </div>
 </template>
 <script>
@@ -328,6 +329,10 @@
             child2.style.color = "white";
             child.style.backgroundColor = "white";
             child.style.color = "#0799fd";
+          },
+          backPre() {
+            console.log("come come");
+            history.go(-1);
           }
         }
     }
@@ -336,5 +341,17 @@
   @import '../../../style/page/order.scss';
   .word {
     font-size: 16px;
+  }
+  .back-button{
+    bottom: 0px;
+    left: 0px;
+    position: fixed;
+    width: 100%;
+    height: 40px;
+    background-color: #216dc0;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    line-height: 38px;
   }
 </style>
